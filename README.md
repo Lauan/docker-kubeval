@@ -9,23 +9,18 @@ Please note that, although the scope is quite simple and straightforward, this i
 
 ### Running locally
 
-If you want to see it working outside your pipeline, use the below docker run command to open a session with the container (note that you will have to pass the directory where the yaml files are as a volume)
+If you want to see it working outside your pipeline, use the below docker run command to evaluate your yaml files (note that you will have to pass the directory where the yaml files are as a volume)
 
 ```sh
 sudo docker run -it -v /your-yaml-dir:/kubeval --name kubeval lauan/kubeval
-```
-
-Inside the container, the yaml files will be at /kubeval. All you have to do is run the below command
-
-```sh
-kubeval -d /kubeval
 ```
 
 The result will be either PASS or ERR, depending on the content of the files
 
 ### Running on a CircleCI pipeline
 
-Below you have a simple config.yml file to add as a pipeline spec on a CircleCI project. Use it exactly as it is or use it as a starting point to build a more complex config.yml file.
+Below you have a simple config.yml file to add as a pipeline spec on a CircleCI project. Use it as a starting point to build a more complex config.yml file.
+If you want to use it exactly as it is, make sure to keep your yaml files in a folder called _specs_ on you repository root.
 
 ```yaml
 version: 2.1
@@ -41,7 +36,7 @@ jobs:
       - checkout
       - run:
           command: |
-            kubeval /kubeval/*.yaml
+            kubeval -d /kubeval/specs
 ```
 
 Thanks!
